@@ -3,15 +3,17 @@ window.onload = function () {
 
   console.log(body);
 
+
+
   // 1. Create a <div> with the class "duck" and add it to the body.  Do this step by step
   // ( 1. create the element
   //   2. add a class to the element
   //   3. append the element to the body )
-
+  
   // 2. Next, use setInterval to toggle the "flap" class on the duck every 250 ms (1/4 second)
   // https://www.w3schools.com/jsref/met_win_setinterval.asp
 
-  // 3. Now, let's move the duck using CSS "top" and "left". Create
+    // 3. Now, let's move the duck using CSS "top" and "left". Create
   // a function `moveDuck` that takes a duck object as an argument and sets the
   // "top" and "left" CSS properties.
   // HINT: Use Math.random() * window.innerWidth    for "left"
@@ -21,7 +23,7 @@ window.onload = function () {
 
   // 5. Congratulations! Move on to part 2!
 
-  // ---------------------------- PART 2 ---------------------------------
+    // ---------------------------- PART 2 ---------------------------------
 
   // 6. Now we will organize this better. Let's create
   //    a "function" called createDuck() that does everything in 1-4
@@ -37,7 +39,7 @@ window.onload = function () {
 
   // 9. Keep going! Move onto part 3!
 
-  // --------------------------- PART 3 ------------------------------------
+    // --------------------------- PART 3 ------------------------------------
 
   // 11. BOOM. Attach a "click" handler that adds the "shot" class to
   //     the duck when you click on it!
@@ -46,8 +48,85 @@ window.onload = function () {
   //     a short delay (1 second) Hint Hint...use setTimeout
   //     as for removing the element check out https://dzone.com/articles/removing-element-plain
 
-  // 13. Create a new function named checkForWinner() that reads the DOM
+  // 13. Create a new function named checkForW2inner() that reads the DOM
   //     to see if there are any ducks left. (How can we check the DOM for more than one element?, and how can we see how many elements we get back) If not, alert "YOU WIN!"
+
+
+  function createDuck() {
+
+
+    let duckDiv = document.createElement('div');
+    duckDiv.className = 'duck';
+    document.body.appendChild(duckDiv);
+
+    setInterval(flapWings, 250);
+
+    function flapWings() {
+      duckDiv.classList.toggle('flap');
+    }
+
+
+
+
+    const randomHeight = () => {
+      return Math.random() * window.innerHeight
+    }
+    const randomWidth = () => {
+      return Math.random() * window.innerWidth
+    }
+
+    function randomPosition(duck) {
+      duck.style.top = randomHeight() + 'px';
+      duck.style.left = randomWidth() + 'px';
+    }
+
+    randomPosition(duckDiv)
+
+    function moveDuck(duck) {
+      duck.style.top = randomHeight() + 'px';
+      duck.style.left = randomWidth() + 'px';
+
+    }
+
+    function newLocation() { moveDuck(duckDiv) };
+
+    setInterval(newLocation, 1000)
+
+    duckDiv.addEventListener("click", addShot)
+
+    function addShot() {
+      duckDiv.classList.add('shot');
+      const duckOut = setTimeout(duckDie, 1000);
+
+      function duckDie() {
+        duckDiv.remove()
+      }
+
+      setInterval(checkForWinner, 1000);
+
+    }
+
+    return duckDiv
+  }
+  
+  
+  for (let i = 0; i < 5; i++) {
+    
+    createDuck()
+  }
+
+
+
+  function checkForWinner() {
+    let ducks = document.getElementsByTagName('div').length;
+    if (ducks == 0) {
+      alert("YOU WIN!");
+    }
+  }
+    
+  
+
+
 
   // 14. BONUS: The ducks are moving pretty erratically, can you think
   //     of a way to adjust the ducks speed based on how far needs to move?
@@ -56,4 +135,4 @@ window.onload = function () {
   //     direction the duck is flying and change the way the duck is facing
 
   // Done, you have accomplish another level of skill
-};
+}
